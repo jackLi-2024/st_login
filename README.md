@@ -18,7 +18,7 @@ The users can logout using the ```Logout``` button.
 
 
 ## Authors
-- [@gauriprabhakar](https://github.com/GauriSP10)
+- [@lijiacai](https://github.com/lijiacaigit/)
 
 ## PyPi
 https://pypi.org/project/streamlit-login-auth-ui/
@@ -128,8 +128,6 @@ __Cookies are automatically created and destroyed depending on the user authenti
 ## Version
 v0.0.0
 
-## License
-[MIT](https://github.com/GauriSP10/streamlit_login_auth_ui/blob/main/LICENSE)
 
 
 
