@@ -29,17 +29,17 @@ https://pypi.org/project/streamlit-login-auth-ui/
 ## Installation
 
 ```python
-pip install streamlit-login-auth-ui
+pip install st_login
 ```
 
 ## How to implement the library?
 
 To import the library, just paste this at the starting of the code:
 ```python
-from streamlit_login_auth_ui.widgets import __login__
+from st_login import Login
 ```
 
-All you need to do is create an object for the ```__login__``` class and pass the following parameters:
+All you need to do is create an object for the ```Login``` class and pass the following parameters:
 1. auth_token : The unique authorization token received from - https://www.courier.com/email-api/
 2. company_name : This is the name of the person/ organization which will send the password reset email.
 3. width : Width of the animation on the login page.
@@ -66,20 +66,37 @@ After doing that, just call the ```build_login_ui()``` function using the object
 # Example:
 ```python
 import streamlit as st
-from streamlit_login_auth_ui.widgets import __login__
+from streamlit_option_menu import option_menu
+from st_login import Login
 
-__login__obj = __login__(auth_token = "courier_auth_token", 
-                    company_name = "Shims",
-                    width = 200, height = 250, 
-                    logout_button_name = 'Logout', hide_menu_bool = False, 
-                    hide_footer_bool = False, 
-                    lottie_url = 'https://assets2.lottiefiles.com/packages/lf20_jcikwtux.json')
 
-LOGGED_IN = __login__obj.build_login_ui()
+class CustomLogin(Login):
+    def nav_sidebar(self):
+        """
+        Creates the side navigaton bar
+        """
+        main_page_sidebar = st.sidebar.empty()
+        with main_page_sidebar:
+            selected_option = option_menu(
+                menu_title='User Info',
+                menu_icon='list-columns-reverse',
+                icons=['box-arrow-in-right', 'person-plus', 'x-circle', 'arrow-counterclockwise'],
+                options=['Login', 'Reset Password'],
+                styles={
+                    "container": {"padding": "5px"},
+                    "nav-link": {"font-size": "14px", "text-align": "left", "margin": "0px"}})
+        return main_page_sidebar, selected_option
 
-if LOGGED_IN == True:
 
-    st.markown("Your Streamlit Application Begins here!")
+is_login = CustomLogin(auth_token="courier_auth_token",
+                       company_name="Shims",
+                       width=200, height=250,
+                       logout_button_name='Logout', hide_menu_bool=True,
+                       hide_footer_bool=False,
+                       lottie_url='https://assets2.lottiefiles.com/packages/lf20_jcikwtux.json').build_login_ui()
+
+if is_login is True:
+    st.markdown("Your Streamlit Application Begins here!")
 ```
 
 That's it! The library handles the rest. \
@@ -109,7 +126,7 @@ Generated in the sidebar only if the user is logged in, allows users to logout. 
 __Cookies are automatically created and destroyed depending on the user authentication status.__
 
 ## Version
-v0.2.0
+v0.0.0
 
 ## License
 [MIT](https://github.com/GauriSP10/streamlit_login_auth_ui/blob/main/LICENSE)
